@@ -45,7 +45,7 @@ class M3U8Downloader:
 """         self._m3u8_content = self._download_m3u8(uri, self._timeout, self._headers)
         assert(self._m3u8_content.is_variant is False) """
 
-        self._failed = []
+        #self._failed = []
         self._pool.map(self._download_ts, self._m3u8_content.segments)
 
         if self._failed:
