@@ -14,6 +14,7 @@ import logging
 import urllib.parse
 import json
 
+
 class M3U8Downloader:
     def __init__(self, config, pool_size = 8, retry = 3):
         self._config = config
