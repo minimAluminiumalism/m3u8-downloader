@@ -80,7 +80,7 @@ class M3U8Downloader:
         self._m3u8_content.dump(filename)
         return filename
 
-"""     def _download_m3u8(self, uri, timeout, headers):
+    def _download_m3u8(self, uri, timeout, headers):
         content = m3u8.load(uri, timeout, headers)
         if content.is_variant:
             print('\nThere are various m3u8 files. Please select one of them.\n')
@@ -95,7 +95,7 @@ class M3U8Downloader:
             except (ValueError, IndexError):
                 print('Invalid Index! Try Again.')
 
-        return content """
+        return content
 
     def _download_ts(self, m3u8_segments):
         uri = urllib.parse.urljoin(m3u8_segments.base_uri, m3u8_segments.uri)
@@ -128,6 +128,7 @@ class M3U8Downloader:
         self._failed.append(uri)
 
     @staticmethod
+    # 静态装饰器
     def _print_stream_info(index, playlist):
         print('INDEX: ' + str(index))
         stream_info = playlist.stream_info
@@ -144,6 +145,7 @@ class M3U8Downloader:
         print()
 
     @staticmethod
+    # 设置 requests 的重试机制和协程
     def _get_http_session(pool_size, retry):
         session = requests.Session()
         adapter = requests.adapters.HTTPAdapter(pool_size, pool_size, retry)
