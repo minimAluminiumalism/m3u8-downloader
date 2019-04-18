@@ -16,7 +16,7 @@ import json
 
 
 class M3U8Downloader:
-    def __init__(self, config, pool_size = 8, retry = 3):
+    def __init__(self, config, pool_size, retry = 10):
         self._config = config
         self.set_pool(pool_size, retry)
 
@@ -35,7 +35,7 @@ class M3U8Downloader:
         if not uri:
             uri = self._config.get('uri', None)
             if not uri:
-                raise ValueError('Uri should not be empty.')
+                raise ValueError('URI should not be empty.')
 
         if not self._output_dir:
             raise ValueError('Output Dir should not be empty.')
@@ -99,6 +99,7 @@ class M3U8Downloader:
         return content
 
     def _download_ts(self, m3u8_segments):
+        # base_uri 和 uri 处使用了描述符
         uri = urllib.parse.urljoin(m3u8_segments.base_uri, m3u8_segments.uri)
         if not self._is_url(uri):
             logging.error('[Not Uri] {0} Skip.'.format(uri))
@@ -170,5 +171,5 @@ if __name__ == '__main__':
         datefmt='%Y-%m-%d %H:%M:%S')
     config_file = open('config.json', 'r')
     config = json.load(config_file)
-    x = M3U8Downloader(config, 50)
+    x = M3U8Downloader(config, 5)
     x.run()
